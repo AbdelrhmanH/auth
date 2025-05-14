@@ -1,0 +1,18 @@
+{
+     "name": "auth",
+     "version": "1.0.0",
+     "description": "Auth backend with Netlify Functions",
+     "scripts": {
+       "start": "netlify dev",
+       "build": "netlify build",
+       "test-email": "node scripts/test-email.js"
+     },
+     "dependencies": {
+       "@sendgrid/mail": "^8.1.0",
+       "firebase-admin": "^12.0.0",
+       "node-fetch": "^2.6.7"
+     },
+     "devDependencies": {
+       "netlify-cli": "^17.0.0"
+     }
+   }
