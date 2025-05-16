@@ -29,7 +29,7 @@ const sendgridMail = require('@sendgrid/mail');
 
       const msg = {
         to: email,
-        from: 'Smart Notifier <yourname@gmail.com>', // استبدل ببريدك الموثق
+        from: 'Smart Notifier <abdelrhmanhn@gmail.com>', // Replace with your verified email
         subject: isArabic ? 'تحقق من بريدك الإلكتروني' : 'Verify Your Email',
         html: isArabic
           ? `
@@ -41,6 +41,7 @@ const sendgridMail = require('@sendgrid/mail');
               <p>الرمز: <strong style="font-size: 20px;">${verificationCode}</strong></p>
               <p>إذا لم يعمل الزر، انسخ: <a href="https://gatewaye.netlify.app/verify-email?code=${userId}">الرابط</a></p>
               <p>الرابط والرمز ينتهيان خلال 24 ساعة.</p>
+              <p>مشكلة؟ تواصل مع <a href="mailto:abdelrhmanhn@gmail.com">abdelrhmanhn@gmail.com</a></p>
             </div>
           `
           : `
@@ -52,6 +53,7 @@ const sendgridMail = require('@sendgrid/mail');
               <p>Code: <strong style="font-size: 20px;">${verificationCode}</strong></p>
               <p>If the button doesn't work, copy: <a href="https://gatewaye.netlify.app/verify-email?code=${userId}">the link</a></p>
               <p>The link and code expire in 24 hours.</p>
+              <p>Trouble? Contact <a href="mailto:abdelrhmanhn@gmail.com">abdelrhmanhn@gmail.com</a></p>
             </div>
           `,
       };
