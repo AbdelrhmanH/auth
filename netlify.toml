@@ -1,7 +1,13 @@
 [build]
-     functions = "netlify/functions"
+  publish = "public"
+  functions = "netlify/functions"
 
-   [[redirects]]
-       from = "/verify-email"
-       to = "/verify-email.html"
-       status = 200
+[[redirects]]
+  from = "/verify-email"
+  to = "/verify-email.html"
+  status = 200
+
+[[redirects]]
+  from = "/verify-email/*"
+  to = "/verify-email.html"
+  status = 200
