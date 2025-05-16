@@ -2,6 +2,6 @@
      functions = "netlify/functions"
 
    [[redirects]]
-     from = "/*"
-     to = "/.netlify/functions/send-verification-email"
-     status = 200
+       from = "/verify-email"
+       to = "/verify-email.html"
+       status = 200
