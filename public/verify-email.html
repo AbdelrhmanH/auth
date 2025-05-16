@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Verification - Smart Notifier</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    h1 { color: #1a73e8; }
+    .message { max-width: 600px; margin: 0 auto; }
+    .button { display: inline-block; padding: 12px 24px; background-color: #1a73e8; color: white; text-decoration: none; border-radius: 6px; }
+    .error { color: red; }
+    .success { color: green; }
+  </style>
+</head>
+<body>
+  <div class="message">
+    <h1>Email Verification</h1>
+    <div id="result">Verifying...</div>
+    <p>Download the Smart Notifier app to complete verification:</p>
+    <a href="https://play.google.com/store/apps/details?id=com.example.smartnotifier" class="button">Get the App</a>
+    <p>Having trouble? Contact <a href="mailto:yourname@gmail.com">support</a>.</p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+    // Replace with your Firebase project configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy5tgb-d9v1X-Co_IE3AHxFjVV_ue7q7Y",
+      authDomain: "auth-one-16764.firebaseapp.com",
+      projectId: "auth-one-16764",
+      storageBucket: "auth-one-16764.firebasestorage.app",
+      messagingSenderId: "1028591788354",
+      appId: "1:1028591788354:web:d241c5b5ee6092d273e8db"
+    };
+
+    async function verifyEmail() {
+      const resultDiv = document.getElementById('result');
+
+      try {
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        console.log('Firebase initialized');
+
+        // Get code from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (!code) {
+          resultDiv.innerHTML = '<p class="error">No verification code found. Please check the link in your email or request a new one.</p>';
+          console.warn('No code parameter in URL');
+          return;
+        }
+
+        // Query Firestore
+        const docRef = doc(db, 'emailVerifications', code);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const expiresAt = data.expiresAt?.toMillis ? data.expiresAt.toMillis() : 0;
+          if (Date.now() <= expiresAt) {
+            resultDiv.innerHTML = '<p class="success">Email verified! Open the Smart Notifier app to continue.</p>';
+            console.log('Verification successful for code:', code);
+          } else {
+            resultDiv.innerHTML = '<p class="error">Verification link expired. Please request a new one.</p>';
+            console.warn('Expired verification for code:', code);
+          }
+        } else {
+          resultDiv.innerHTML = '<p class="error">Invalid verification link. Please check the link or contact support.</p>';
+          console.warn('No verification record found for code:', code);
+        }
+      } catch (error) {
+        console.error('Verification error:', error);
+        resultDiv.innerHTML = '<p class="error">Error verifying email. Please try again or contact <a href="mailto:yourname@gmail.com">support</a>.</p>';
+      }
+    }
+
+    // Run verification
+    verifyEmail();
+  </script>
+</body>
+</html>
