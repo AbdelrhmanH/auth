@@ -11,7 +11,7 @@ const sendgridMail = require('@sendgrid/mail');
       }),
     });
   }
-console.log("API KEY:", process.env.SENDGRID_API_KEY);
+//console.log("API KEY:", process.env.SENDGRID_API_KEY);
   const db = admin.firestore();
 
   exports.handler = async (event, context) => {
@@ -75,7 +75,7 @@ console.log("API KEY:", process.env.SENDGRID_API_KEY);
       console.error('Error:', error);
       return {
         statusCode: 500,
-        body: JSON.stringify({ error:  process.env.SENDGRID_API_KEY }),
+        body: JSON.stringify({ error: 'Failed to send email' }),
       };
     }
   };
