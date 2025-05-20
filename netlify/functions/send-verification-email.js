@@ -58,7 +58,7 @@ const sendgridMail = require('@sendgrid/mail');
           `,
       };
 
-      await sendgridMail.send(msg);
+      //await sendgridMail.send(msg);
 
       await db.collection('emailVerifications').doc(userId).set({
         code: verificationCode,
